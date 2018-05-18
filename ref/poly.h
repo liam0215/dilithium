@@ -5,9 +5,15 @@
 #include "params.h"
 #include "fips202.h"
 
+#ifdef _WIN32
+__declspec(align(32)) typedef struct {
+  uint32_t coeffs[N];
+} poly;
+#else
 typedef struct {
   uint32_t coeffs[N];
 } poly __attribute__((aligned(32)));
+#endif
 
 void poly_copy(poly *b, const poly *a);
 void poly_freeze(poly *a);
